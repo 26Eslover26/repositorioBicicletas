@@ -1,74 +1,93 @@
 package proyecto_bicicletas_g32.bicicleta_spring.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-@Table(name = "Client")
+@Table(name = "client")
 public class Clientes implements Serializable
 {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Integer ID;
-    private String NAME;
-    private String EMAIL;
-    private Integer AGE;
+    private Integer idClient;
+    private String email;
+    private String password;
+    private String name;
+    private Integer age;
     
-    public Clientes()
-    {
-        
+
+    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "client")
+    @JsonIgnoreProperties("client")
+    public List<mensajes> messages;
+
+    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "client")
+    @JsonIgnoreProperties("client")
+    public List<Reservas> reservations;
+
+    public Integer getIdClient() {
+        return idClient;
     }
 
-    public Clientes(Integer iD, String nAME, String eMAIL, Integer aGE)
-    {
-        ID = iD;
-        NAME = nAME;
-        EMAIL = eMAIL;
-        AGE = aGE;
+    public void setIdClient(Integer idClient) {
+        this.idClient = idClient;
     }
 
-    public Integer getID()
-    {
-        return ID;
+    public String getEmail() {
+        return email;
     }
 
-    public void setID(Integer iD)
-    {
-        ID = iD;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getNAME()
-    {
-        return NAME;
+    public String getPassword() {
+        return password;
     }
 
-    public void setNAME(String nAME)
-    {
-        NAME = nAME;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getEMAIL()
-    {
-        return EMAIL;
+    public String getName() {
+        return name;
     }
 
-    public void setEMAIL(String eMAIL)
-    {
-        EMAIL = eMAIL;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getAGE()
-    {
-        return AGE;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setAGE(Integer aGE)
-    {
-        AGE = aGE;
-    }   
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public List<mensajes> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<mensajes> messages) {
+        this.messages = messages;
+    }
+
+    public List<Reservas> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservas> reservations) {
+        this.reservations = reservations;
+    }
+
 }

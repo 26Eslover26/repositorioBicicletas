@@ -6,45 +6,60 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table (name = "Message")
+@Table (name = "message")
 public class mensajes implements Serializable
 {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String messagetext;
-    
-    public mensajes()
-    {
+    private Integer idMessage;
+    private String messageText;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    @JsonIgnoreProperties({"messages", "client", "reservations"})
+    private Bicicletas bike;
+
+    @ManyToOne
+    @JoinColumn(name = "clientId")
+    @JsonIgnoreProperties({"messages", "client", "reservations"})
+    private Clientes client;
+
+    public Integer getIdMessage() {
+        return idMessage;
     }
 
-    public mensajes(Integer id, String messagetext)
-    {
-        this.id = id;
-        this.messagetext = messagetext;
+    public void setIdMessage(Integer idMessage) {
+        this.idMessage = idMessage;
     }
 
-    public Integer getId()
-    {
-        return id;
+    public String getMessageText() {
+        return messageText;
     }
 
-    public void setId(Integer id)
-    {
-        this.id = id;
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
     }
 
-    public String getMessagetext() 
-    {
-        return messagetext;
+    public Bicicletas getBike() {
+        return bike;
     }
 
-    public void setMessagetext(String messagetext)
-    {
-        this.messagetext = messagetext;
-    }   
+    public void setBike(Bicicletas bike) {
+        this.bike = bike;
+    }
+
+    public Clientes getClient() {
+        return client;
+    }
+
+    public void setClient(Clientes client) {
+        this.client = client;
+    }
+
 }

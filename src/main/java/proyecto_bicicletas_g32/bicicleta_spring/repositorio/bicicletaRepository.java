@@ -27,4 +27,9 @@ public class bicicletaRepository
         {
             return bicicletaCrudRepository.save(b);
         }
+
+    public void delete(Bicicletas Bike)
+    {
+        bicicletaCrudRepository.delete(Bike);
+    }
 }

@@ -1,86 +1,106 @@
 package proyecto_bicicletas_g32.bicicleta_spring.modelo;
 
 import java.io.Serializable;
-
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table (name = "Bicicleta")
+@Table (name = "bike")
 public class Bicicletas implements Serializable
 {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Integer ID;
-    private String BRAND;
-    private Integer MODEL;
-    private Integer CATEGORY_ID;
-    private String NAME;
-
-    public Bicicletas()
-    {
-        
-    }
-
-    public Bicicletas(Integer iD, String bRAND, Integer mODEL, Integer cATEGORY_ID, String nAME)
-    {
-        ID = iD;
-        BRAND = bRAND;
-        MODEL = mODEL;
-        CATEGORY_ID = cATEGORY_ID;
-        NAME = nAME;
-    }
-
-    public Integer getID()
-    {
-        return ID;
-    }
+    private Integer id;
+    private String name;
+    private String brand;
+    private Integer year;
+    private String description;
     
-    public void setID(Integer iD)
-    {
-        ID = iD;
+
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    @JsonIgnoreProperties("bikes")
+    private Categorias category;
+
+    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "bike")
+    @JsonIgnoreProperties({"bike", "client"})
+    public List<mensajes> messages;
+
+    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "bike")
+    @JsonIgnoreProperties({"bike", "client"})
+    public List<Reservas> reservations;
+
+    public Integer getId() {
+        return id;
     }
 
-    public String getBRAND()
-    {
-        return BRAND;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setBRAND(String bRAND)
-    {
-        BRAND = bRAND;
+    public String getName() {
+        return name;
     }
 
-    public Integer getMODEL()
-    {
-        return MODEL;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setMODEL(Integer mODEL)
-    {
-        MODEL = mODEL;
+    public String getBrand() {
+        return brand;
     }
 
-    public Integer getCATEGORY_ID()
-    {
-        return CATEGORY_ID;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
-    public void setCATEGORY_ID(Integer cATEGORY_ID)
-    {
-        CATEGORY_ID = cATEGORY_ID;
+    public Integer getYear() {
+        return year;
     }
 
-    public String getNAME()
-    {
-        return NAME;
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
-    public void setNAME(String nAME)
-    {
-        NAME = nAME;
+    public String getDescription() {
+        return description;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Categorias getCategory() {
+        return category;
+    }
+
+    public void setCategory(Categorias category) {
+        this.category = category;
+    }
+
+    public List<mensajes> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<mensajes> messages) {
+        this.messages = messages;
+    }
+
+    public List<Reservas> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservas> reservations) {
+        this.reservations = reservations;
+    }
+
 }

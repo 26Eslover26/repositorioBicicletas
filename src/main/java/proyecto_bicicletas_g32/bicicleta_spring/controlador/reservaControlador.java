@@ -15,47 +15,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import proyecto_bicicletas_g32.bicicleta_spring.modelo.Bicicletas;
-import proyecto_bicicletas_g32.bicicleta_spring.servicios.bicicletaService;
+import proyecto_bicicletas_g32.bicicleta_spring.modelo.Reservas;
+import proyecto_bicicletas_g32.bicicleta_spring.servicios.reservaService;
 
 @RestController
-@RequestMapping(path = "/api/Bike")
+@RequestMapping(path = "/api/Reservation")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
-public class controlador
+public class reservaControlador
 {
     @Autowired
-    private bicicletaService bicicletaService;
+    private reservaService reservaService;
 
     @GetMapping(path = "/all")
-    public List<Bicicletas> getBicicletas()
+    public List<Reservas> getReservas()
         {
-            return bicicletaService.getAll();
+            return reservaService.getAll();
         }
 
     @GetMapping(path = "/{id}")
-    public Optional<Bicicletas> getBicicleta(@PathVariable("id") int id)
+    public Optional<Reservas> getReserva(@PathVariable("id") int id)
         {
-            return bicicletaService.getBicicleta(id);
+            return reservaService.getReserva(id);
         }
 
     @PostMapping(path = "/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public Bicicletas save(@RequestBody Bicicletas b)
+    public Reservas save(@RequestBody Reservas r)
         {
-            return bicicletaService.save(b);
+            return reservaService.save(r);
         }
 
     @PutMapping(path = "/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Bicicletas update(@RequestBody Bicicletas bike)
+    public Reservas update(@RequestBody Reservas reservation)
         {
-            return bicicletaService.update(bike);
+            return reservaService.update(reservation);
         }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean delete(@PathVariable("id") int bikeId)
+    public boolean delete(@PathVariable("id") int reservationId)
         {
-            return bicicletaService.deleteBike(bikeId);
+            return reservaService.deleteReservation(reservationId);
         }
 }

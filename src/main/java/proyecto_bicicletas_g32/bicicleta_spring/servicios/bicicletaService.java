@@ -14,32 +14,82 @@ public class bicicletaService
     private bicicletaRepository bicicletaRepository;
 
     public List<Bicicletas> getAll()
-    {
-        return bicicletaRepository.getAll();
-    }
+        {
+            return bicicletaRepository.getAll();
+        }
 
     public Optional<Bicicletas> getBicicleta(int id)
-    {
-        return bicicletaRepository.getBicicleta(id);
-    }
+        {
+            return bicicletaRepository.getBicicleta(id);
+        }
 
     public Bicicletas save(Bicicletas b)
-    {
-        if (b.getID()==null)
-            {
-                return bicicletaRepository.save(b);
-            }
-        else
-            {
-                Optional<Bicicletas> bAux = bicicletaRepository.getBicicleta(b.getID());
-                if (bAux.isEmpty())
-                    {
-                        return bicicletaRepository.save(b);
-                    }
-                else
-                    {
-                        return b;
-                    }
-            }
-    }
+        {
+            if (b.getId()==null)
+                {
+                    return bicicletaRepository.save(b);
+                }
+            else
+                {
+                    Optional<Bicicletas> bAux = bicicletaRepository.getBicicleta(b.getId());
+                    if (bAux.isEmpty())
+                        {
+                            return bicicletaRepository.save(b);
+                        }
+                    else
+                        {
+                            return b;
+                        }
+                }
+        }
+
+    public Bicicletas update(Bicicletas bike)
+        {
+            if(bike.getId()!=null)
+                {
+                    Optional<Bicicletas> e=bicicletaRepository.getBicicleta(bike.getId());
+                    if(!e.isEmpty())
+                        {
+                            if(bike.getName()!=null)
+                                {
+                                    e.get().setName(bike.getName());
+                                }
+                            if(bike.getBrand()!=null)
+                                {
+                                    e.get().setBrand(bike.getBrand());
+                                }
+                            if(bike.getYear()!=null)
+                                {
+                                    e.get().setYear(bike.getYear());
+                                }
+                            if(bike.getDescription()!=null)
+                                {
+                                    e.get().setDescription(bike.getDescription());
+                                }
+                            if(bike.getCategory()!=null)
+                                {
+                                    e.get().setCategory(bike.getCategory());
+                                }
+                            bicicletaRepository.save(e.get());
+                            return e.get();
+                        }
+                    else
+                        {
+                            return bike;
+                        }
+                }
+            else
+                {
+                    return bike;
+                }
+        }
+    
+    public boolean deleteBike(int bikeId)
+        {
+            boolean aboolean = getBicicleta(bikeId).map(bicicletas -> {
+                bicicletaRepository.delete(bicicletas);
+                return true;
+            }).orElse(false);
+            return aboolean;
+        }
 }

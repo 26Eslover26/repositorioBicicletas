@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import proyecto_bicicletas_g32.bicicleta_spring.modelo.Clientes;
 import proyecto_bicicletas_g32.bicicleta_spring.servicios.clienteService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -25,22 +27,36 @@ public class clienteControlador
     @Autowired
     private clienteService clienteService;
     
-    @GetMapping("/all")
+    @GetMapping(path = "/all")
     public List<Clientes> getClients()
         {
             return clienteService.getAll();
         }
 
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}")
     public Optional<Clientes> getCliente(@PathVariable("id") int id)
         {
             return clienteService.getCliente(id);
         }
 
-    @PostMapping("/save")
+    @PostMapping(path = "/save")
     @ResponseStatus(HttpStatus.CREATED)
     public Clientes save(@RequestBody Clientes c)
         {            
             return clienteService.save(c);
-        }    
+        }
+
+    @PutMapping(path = "/update")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Clientes update(@RequestBody Clientes client)
+        {
+            return clienteService.update(client);
+        }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public boolean delete(@PathVariable("id") int clientId)
+        {
+            return clienteService.deleteClient(clientId);
+        }
 }
